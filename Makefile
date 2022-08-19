@@ -10,14 +10,23 @@ SRCS = $(shell find src/ -name "*.c")
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 LD_LIBS = 
 
+# External definitions
+COMPILE_TIME = $(shell date +"%Y-%M-%d %H:%M:%S")
+GIT_HEAD = $(shell git show -s --pretty=format:%h)
+DEFS += -D COMPILE_TIME="\"$(COMPILE_TIME)\""
+DEFS += -D GIT_HEAD="\"$(GIT_HEAD)\""
+DEFS += -D EXTDEFS_ENABLE
+
+# Compile commands
 CC = gcc
 LD = gcc
 
-CFLAGS += -Wall -Werror -O2 -MMD $(INCLUDES)
+CFLAGS += -Wall -Werror -O2 -MMD $(INCLUDES) $(DEFS)
 
 # Depencies
 -include $(OBJS:.o=.d)
 
+# Rules
 $(OBJ_DIR)/%.o: src/%.c
 	@echo +CC $<
 	@mkdir -p $(dir $@)
@@ -29,7 +38,7 @@ $(BINARY): $(OBJS)
 
 run: $(BINARY)
 	@echo [RUN] $^
-	$(BINARY)
+	@$(BINARY)
 
 clean:
 	@echo [CLEAN]
