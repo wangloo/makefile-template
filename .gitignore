@@ -1,0 +1,14 @@
+# Lock all files and directories with dot
+*.* 
+# Lock all files and directories, 有这条其实上一条没必要
+* 
+# 解锁当前路径下的所有目录文件, 才能找到逐级解锁子目录下的文件
+!*/  
+
+# 解锁子目录src下的所有文件(including directories)
+!/src/* 
+!/inc/* 
+!README.md 
+!Makefile
+!.gitignore
+
