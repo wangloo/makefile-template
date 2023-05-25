@@ -8,7 +8,7 @@
 # 解锁子目录src下的所有文件(including directories)
 !/src/* 
 !/inc/* 
-!README.md 
+!README
 !Makefile
 !.gitignore
 

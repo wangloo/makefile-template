@@ -1,0 +1,11 @@
+# Introduce
+
+提供了两个版本:
+- ver1 简单功能比较少, 适合文件少的项目. 
+  没有建立头文件的依赖
+- ver2 有头文件依赖,并且还有编译时间的输出,
+  但是没有整理, 可能看起来比较乱
+
+> TODO: add dependence files for `ver1`, ref: 
+> https://makefiletutorial.com/#makefile-cookbook
+
