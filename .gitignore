@@ -5,9 +5,9 @@
 # 解锁当前路径下的所有目录文件, 才能找到逐级解锁子目录下的文件
 !*/  
 
-# 解锁子目录src下的所有文件(including directories)
-!/src/* 
-!/inc/* 
+# 只解锁Makefile，并不上传其他测试用的文件
+# !/src/* 
+# !/inc/* 
 !README
 !Makefile
 !.gitignore
