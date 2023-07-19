@@ -1,13 +1,15 @@
+all:
 NAME = main
 
 BUILD_DIR ?= ./build
-OBJ_DIR ?= $(BUILD_DIR)/obj
+OBJ_DIR ?= $(BUILD_DIR)
 BINARY ?= $(BUILD_DIR)/$(NAME)
-INC_DIR += ./inc
+INC_DIR = ./inc
+SRC_DIR = ./src
 
+SRCS = $(shell find $(SRC_DIR) -name "*.c")
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INCLUDES = $(addprefix -I, $(INC_DIR))
-SRCS = $(shell find src/ -name "*.c")
-OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 LD_LIBS = 
 
 # External definitions
@@ -27,7 +29,7 @@ CFLAGS += -Wall -Werror -O2 -MMD $(INCLUDES) $(DEFS)
 -include $(OBJS:.o=.d)
 
 # Rules
-$(OBJ_DIR)/%.o: src/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo +CC $<
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c -o $@ $<
@@ -37,9 +39,14 @@ $(BINARY): $(OBJS)
 	@$(LD) -O2 -rdynamic -o $@ $^ $(LD_LIBS)
 
 run: $(BINARY)
-	@echo [RUN] $^
+	@echo [run] $^
 	@$(BINARY)
+
+all: $(BINARY)
+	@echo [build] ok
 
 clean:
 	@echo [CLEAN]
 	-rm -rf $(BUILD_DIR)
+
+.PHONY = all run clean
